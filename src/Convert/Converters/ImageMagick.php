@@ -158,7 +158,7 @@ class ImageMagick extends AbstractConverter
             // we cannot apply the max-quality logic, but we can provide auto quality
             // simply by not specifying the quality option.
         } else {
-            $commandArguments[] = '-quality ' . escapeshellarg($this->getCalculatedQuality());
+            $commandArguments[] = '-quality ' . function_exists('escapeshellarg') ? escapeshellarg($this->getCalculatedQuality()) : $this->getCalculatedQuality();
         }
 
         $options = $this->options;
@@ -177,7 +177,7 @@ class ImageMagick extends AbstractConverter
                             ' "icon" and "text", but grouped these into one option: "graph".'
                         );
                 }
-                $commandArguments[] = '-define webp:image-hint=' . escapeshellarg($imageHint);
+                $commandArguments[] = '-define webp:image-hint=' . function_exists('escapeshellarg') ? escapeshellarg($imageHint) : $imageHint;
             }
         }
 
@@ -219,7 +219,7 @@ class ImageMagick extends AbstractConverter
 
         if ($options['near-lossless'] != 100) {
             if (version_compare($versionNumber, '7.0.10-54', '>=')) { // #299
-                $commandArguments[] = '-define webp:near-lossless=' . escapeshellarg($options['near-lossless']);
+                $commandArguments[] = '-define webp:near-lossless=' . function_exists('escapeshellarg') ? escapeshellarg($options['near-lossless']) : $options['near-lossless'];
             } else {
                 $this->logLn(
                     'Note: "near-lossless" option is not supported in your version of ImageMagick. ' .
@@ -232,8 +232,8 @@ class ImageMagick extends AbstractConverter
         // "method" is at least available from 6.9.4-0 (I can't see further back)
         $commandArguments[] = '-define webp:method=' . $options['method'];
 
-        $commandArguments[] = escapeshellarg($this->source);
-        $commandArguments[] = escapeshellarg('webp:' . $this->destination);
+        $commandArguments[] = function_exists('escapeshellarg') ? escapeshellarg($this->source) : $this->source;
+        $commandArguments[] = function_exists('escapeshellarg') ? escapeshellarg('webp:' . $this->destination) : $this->destination;
 
         return implode(' ', $commandArguments);
     }

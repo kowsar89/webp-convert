@@ -110,7 +110,7 @@ class FFMpeg extends AbstractConverter
         $commandArguments = [];
 
         $commandArguments[] = '-i';
-        $commandArguments[] = escapeshellarg($this->source);
+        $commandArguments[] = function_exists('escapeshellarg') ? escapeshellarg($this->source) : $this->source;
 
         // preset. Appears first in the list as recommended in the cwebp docs
         if (!is_null($this->options['preset'])) {
@@ -127,7 +127,7 @@ class FFMpeg extends AbstractConverter
             // we cannot apply the max-quality logic, but we can provide auto quality
             // simply by not specifying the quality option.
         } else {
-            $commandArguments[] = '-qscale ' . escapeshellarg($this->getCalculatedQuality());
+            $commandArguments[] = '-qscale ' . function_exists('escapeshellarg') ? escapeshellarg($this->getCalculatedQuality()) : $this->getCalculatedQuality();
         }
         if ($this->options['encoding'] == 'lossless') {
             $commandArguments[] = '-lossless 1';
@@ -142,7 +142,7 @@ class FFMpeg extends AbstractConverter
         // compression_level maps to method, according to https://www.ffmpeg.org/ffmpeg-codecs.html#libwebp
         $commandArguments[] = '-compression_level ' . $this->options['method'];
 
-        $commandArguments[] = escapeshellarg($this->destination);
+        $commandArguments[] = function_exists('escapeshellarg') ? escapeshellarg($this->destination) : $this->destination;
 
 
         return implode(' ', $commandArguments);

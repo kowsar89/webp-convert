@@ -76,7 +76,7 @@ class JpegQualityDetector
 
             try {
                 ExecWithFallback::exec(
-                    "identify -format '%Q' " . escapeshellarg($filename) . " 2>&1",
+                    "identify -format '%Q' " . function_exists('escapeshellarg') ? escapeshellarg($filename) : $filename . " 2>&1",
                     $output,
                     $returnCode
                 );
@@ -110,7 +110,7 @@ class JpegQualityDetector
             // Try GraphicsMagick
             try {
                 ExecWithFallback::exec(
-                    "gm identify -format '%Q' " . escapeshellarg($filename) . " 2>&1",
+                    "gm identify -format '%Q' " . function_exists('escapeshellarg') ? escapeshellarg($filename) : $filename . " 2>&1",
                     $output,
                     $returnCode
                 );
