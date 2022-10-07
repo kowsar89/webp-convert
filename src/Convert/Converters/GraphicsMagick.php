@@ -120,7 +120,7 @@ class GraphicsMagick extends AbstractConverter
             // Check out #91 - it is perhaps as easy as this: "-define jpeg:preserve-settings"
         }
         */
-        $commandArguments[] = '-quality ' . function_exists('escapeshellarg') ? escapeshellarg($this->getCalculatedQuality()) : $this->getCalculatedQuality();
+        $commandArguments[] = '-quality ' . (function_exists('escapeshellarg') ? escapeshellarg($this->getCalculatedQuality()) : $this->getCalculatedQuality());
 
         $options = $this->options;
 
@@ -138,7 +138,7 @@ class GraphicsMagick extends AbstractConverter
                             '"drawing", "icon" and "text", but grouped these into one option: "graph".'
                         );
                 }
-                $commandArguments[] = '-define webp:image-hint=' . function_exists('escapeshellarg') ? escapeshellarg($imageHint) : $imageHint;
+                $commandArguments[] = '-define webp:image-hint=' . (function_exists('escapeshellarg') ? escapeshellarg($imageHint) : $imageHint);
             }
         }
 
@@ -179,8 +179,8 @@ class GraphicsMagick extends AbstractConverter
 
         $commandArguments[] = '-define webp:method=' . $options['method'];
 
-        $commandArguments[] = function_exists('escapeshellarg') ? escapeshellarg($this->source) : $this->source;
-        $commandArguments[] = function_exists('escapeshellarg') ? escapeshellarg('webp:' . $this->destination) : 'webp:' . $this->destination;
+        $commandArguments[] = (function_exists('escapeshellarg') ? escapeshellarg($this->source) : $this->source);
+        $commandArguments[] = (function_exists('escapeshellarg') ? escapeshellarg('webp:' . $this->destination) : 'webp:' . $this->destination);
 
         return implode(' ', $commandArguments);
     }
