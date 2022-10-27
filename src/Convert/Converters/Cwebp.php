@@ -305,7 +305,7 @@ class Cwebp extends AbstractConverter
                 $cValues = substr($cmdOption, $pos + 1);
                 $cValuesArr = explode(' ', $cValues);
                 foreach ($cValuesArr as &$cArg) {
-                    $cArg = (function_exists('escapeshellarg') ? escapeshellarg($cArg) : $cArg);
+                    $cArg = escapeshellarg($cArg);
                 }
                 $cValues = implode(' ', $cValuesArr);
                 $cmdOptions[] = '-' . $cName . ' ' . $cValues;
@@ -357,7 +357,7 @@ class Cwebp extends AbstractConverter
         // preset. Appears first in the list as recommended in the docs
         if (!is_null($options['preset'])) {
             if ($options['preset'] != 'none') {
-                $cmdOptions[] = '-preset ' . (function_exists('escapeshellarg') ? escapeshellarg($options['preset']) : $options['preset']);
+                $cmdOptions[] = '-preset ' . escapeshellarg($options['preset']);
             }
         }
 
@@ -379,7 +379,7 @@ class Cwebp extends AbstractConverter
 
         // alpha-quality
         if ($this->options['alpha-quality'] !== 100) {
-            $cmdOptions[] = '-alpha_q ' . (function_exists('escapeshellarg') ? escapeshellarg($this->options['alpha-quality']) : $this->options['alpha-quality']);
+            $cmdOptions[] = '-alpha_q ' . escapeshellarg($this->options['alpha-quality']);
         }
 
         // Losless PNG conversion
@@ -447,10 +447,10 @@ class Cwebp extends AbstractConverter
         }
 
         // Source file
-        $cmdOptions[] = (function_exists('escapeshellarg') ? escapeshellarg($this->source) : $this->source);
+        $cmdOptions[] = escapeshellarg($this->source);
 
         // Output
-        $cmdOptions[] = '-o ' . (function_exists('escapeshellarg') ? escapeshellarg($this->destination) : $this->destination);
+        $cmdOptions[] = '-o ' . escapeshellarg($this->destination);
 
         $commandOptions = implode(' ', $cmdOptions);
         //$this->logLn('command line options:' . $commandOptions);
