@@ -70,19 +70,19 @@ trait EncodingAutoTrait
 		if (file_exists($destinationLossless) && file_exists($destinationLossy)) {
 			if (filesize($destinationLossless) > filesize($destinationLossy)) {
 				$this->logLn('Picking lossy');
-				unlink($destinationLossless);
-				rename($destinationLossy, $destination);
+				@unlink($destinationLossless);
+				@rename($destinationLossy, $destination);
 			} else {
 				$this->logLn('Picking lossless');
-				unlink($destinationLossy);
-				rename($destinationLossless, $destination);
+				@unlink($destinationLossy);
+				@rename($destinationLossless, $destination);
 			}
 		} else {
 			if (file_exists($destinationLossless)) {
-				rename($destinationLossless, $destination);
+				@rename($destinationLossless, $destination);
 			}
 			if (file_exists($destinationLossy)) {
-				rename($destinationLossy, $destination);
+				@rename($destinationLossy, $destination);
 			}
 		}
         $this->setDestination($destination);

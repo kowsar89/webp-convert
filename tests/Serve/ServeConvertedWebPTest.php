@@ -425,7 +425,7 @@ class ServeConvertedWebPTest extends CompatibleTestCase
         ];
         $result = self::callServeWithThrow($source, $source . '.webp', $options);
 
-        unlink($destination);
+        @unlink($destination);
 
         // Our success-converter always creates fake webps with the content:
         // "we-pretend-this-is-a-valid-webp!".
